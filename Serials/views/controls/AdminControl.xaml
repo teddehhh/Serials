@@ -1,0 +1,512 @@
+﻿<UserControl x:Class="Serials.views.controls.AdminControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Serials.views.controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             FontSize="20">
+    <UserControl.Resources>
+        <Style x:Key="ContentCtrl">
+            <Setter Property="Control.Width" Value="80"/>
+            <Setter Property="Control.Height" Value="30"/>
+            <Setter Property="Control.Margin" Value="10,0"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="{Binding Name}"/>
+            <Button Content="Редактор запросов"
+                    Command="{Binding OpenConstructorCmd}"/>
+        </StackPanel>
+        <TabControl Grid.Row="1"
+                    TabStripPlacement="Top"
+                    >
+            <TabItem Header="Жанр"
+                     DataContext="{Binding GenreList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0"
+                              ItemsSource="{Binding Collection}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Название"
+                                   HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource ContentCtrl}"
+                                 Text="{Binding Name}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Страна"
+                     DataContext="{Binding CountryList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0"
+                              ItemsSource="{Binding Collection}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Название"
+                                   HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource ContentCtrl}"
+                                 Text="{Binding Name}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Актер"
+                     DataContext="{Binding ActorList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0"
+                              ItemsSource="{Binding Collection}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Имя">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Страна">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding CountryList}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="item.CountryID"
+                                                      SelectedValue="{Binding CountryID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Имя"
+                                   HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource ContentCtrl}"
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Страна"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox ItemsSource="{Binding CountryListVM.Collection}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="item.CountryID"
+                                                      SelectedValue="{Binding CountryID, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Комментарии"
+                     DataContext="{Binding CommentList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0"
+                              ItemsSource="{Binding Collection}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Текст">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Сериал">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding SerialList}"
+                                                      DisplayMemberPath="Title"
+                                                      SelectedValuePath="item.SerialID"
+                                                      SelectedValue="{Binding SerialID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Гость">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding VisitorList}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="item.VisitorID"
+                                                      SelectedValue="{Binding VisitorID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Дата">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding CommentDate}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Текст"
+                                   HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource ContentCtrl}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Сериал"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox Style="{StaticResource ContentCtrl}"
+                                  ItemsSource="{Binding SerialListVM.Collection}"
+                                  DisplayMemberPath="Title"
+                                  SelectedValuePath="item.SerialID"
+                                  SelectedValue="{Binding SerialID, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Гость"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox Style="{StaticResource ContentCtrl}"
+                                  ItemsSource="{Binding VisitorListVM.Collection}"
+                                  DisplayMemberPath="Name"
+                                  SelectedValuePath="item.VisitorID"
+                                  SelectedValue="{Binding VisitorID,UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Дата"
+                                   HorizontalAlignment="Center"/>
+                            <DatePicker SelectedDate="{Binding CommentDate, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Сериал-Актер"
+                     DataContext="{Binding SerialActorList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <ListView Grid.Row="0"
+                              ItemsSource="{Binding CollectionView}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Сериал">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox ItemsSource="{Binding SerialList}"
+                                                      DisplayMemberPath="Title"
+                                                      SelectedValuePath="item.SerialID"
+                                                      SelectedValue="{Binding SerialID}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Актер">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox ItemsSource="{Binding ActorList}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="item.ActorID"
+                                                      SelectedValue="{Binding ActorID}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Grid.Column="1"
+                                Grid.Row="0">
+                            <Label Content="Фильтр"/>
+                            <TextBox Text="{Binding ActorName, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Сериал"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox Style="{StaticResource ContentCtrl}"
+                                  ItemsSource="{Binding SerialListVM.Collection}"
+                                  DisplayMemberPath="Title"
+                                  SelectedValuePath="item.SerialID"
+                                  SelectedValue="{Binding SerialID,UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Актер"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox Style="{StaticResource ContentCtrl}"
+                                  ItemsSource="{Binding ActorListVM.Collection}"
+                                  DisplayMemberPath="Name"
+                                  SelectedValuePath="item.ActorID"
+                                  SelectedValue="{Binding ActorID,UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+
+                    </StackPanel>
+                    
+                    
+                </Grid>
+            </TabItem>
+            <TabItem Header="Сериалы"
+                     DataContext="{Binding SerialList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0"
+                              ItemsSource="{Binding Collection}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Жанр">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding GenreList}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="item.GenreID"
+                                                      SelectedValue="{Binding GenreID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Header="Дата выхода">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding ReleaseDate}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Жанр"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox Style="{StaticResource ContentCtrl}"
+                                  ItemsSource="{Binding GenreListVM.Collection}"
+                                  DisplayMemberPath="Name"
+                                  SelectedValuePath="item.GenreID"
+                                  SelectedValue="{Binding GenreID, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Название"
+                                   HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource ContentCtrl}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Дата выхода"
+                                   HorizontalAlignment="Center"/>
+                            <DatePicker SelectedDate="{Binding ReleaseDate, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Гости"
+                     DataContext="{Binding VisitorList}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0"
+                              ItemsSource="{Binding Collection}"
+                              SelectedItem="{Binding SelectedItem}"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Имя">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Дата рождения">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding Birthday}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Имя"
+                                   HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource ContentCtrl}"
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
+                                    Width="100">
+                            <Label Content="Дата рождения"
+                                   HorizontalAlignment="Center"/>
+                            <DatePicker SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <Button Content="+"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding AddCmd}"/>
+                        <Button Content="-"
+                                Style="{StaticResource ContentCtrl}"
+                                Command="{Binding DelCmd}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Регистрация">
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                    <Label VerticalAlignment="Center"
+                   Content="Имя"/>
+                    <TextBox Style="{StaticResource ContentCtrl}"
+                     Text="{Binding Login}"/>
+                    <Label VerticalAlignment="Center" 
+                   Content="Пароль"/>
+                    <PasswordBox Style="{StaticResource ContentCtrl}"
+                         PasswordChanged="PasswordBox_PasswordChanged"/>
+                    <Label VerticalAlignment="Center"
+                   Content="Жанр"/>
+                    <ComboBox ItemsSource="{Binding GenreList.Collection}"
+                      Style="{StaticResource ContentCtrl}"
+                      DisplayMemberPath="Name"
+                      SelectedValuePath="item.GenreID"
+                      SelectedValue="{Binding GenreID}"/>
+                    <Button Content="Подтвердить"
+                            Margin="10"
+                    Style="{StaticResource ContentCtrl}"
+                    Command="{Binding AddUserCmd}"
+                            Width="200"/>
+                </StackPanel>
+
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
